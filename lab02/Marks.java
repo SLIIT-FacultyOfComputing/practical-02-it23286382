@@ -21,11 +21,12 @@ public class Marks {
             System.out.println("3. Get the average marks for a subject");
             System.out.println("4. Get the average marks for a student");
             System.out.println("5. Get the total marks for a student");
-            System.out.println("6. Exit");
+            System.out.println("6. Get the grading for a student");
+            System.out.println("7. Exit");
 
             choice = scanner.nextInt();
 
-            if (choice != 3 && choice != 6) {
+            if (choice != 3 && choice != 6 && choice != 7) {
                 System.out.println("Enter the student ID (between 1 and 20):");
                 studentID = scanner.nextInt();
                 if (studentID < 1 || studentID > 20) {
@@ -62,13 +63,16 @@ public class Marks {
                     total(studentID);
                     break;
                 case 6:
+                    grading(studentID);
+                    break;
+                case 7:
                     System.out.println("Exiting...");
                     break;
                 default:
                     System.out.println("Invalid choice, please enter a valid number.");
                     break;
             }
-        } while (choice != 6);
+        } while (choice != 7);
 
         scanner.close();
     }
@@ -155,6 +159,36 @@ public class Marks {
                     total += stdsubArray[i][j];
                 }
                 System.out.printf("The total marks for student %d is %d.%n", studentID, total);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Incorrect ID");
+        }
+    }
+
+    public static void grading(int studentID) {
+        boolean found = false;
+        for (int i = 0; i < count; i++) {
+            if (stdsubArray[i][0] == studentID) {
+                System.out.println("Grading for student ID " + studentID + ":");
+                for (int j = 1; j <= SUBJECTS; j++) {
+                    String grade;
+                    int marks = stdsubArray[i][j];
+                    if (marks >= 90) {
+                        grade = "A";
+                    } else if (marks >= 80) {
+                        grade = "B";
+                    } else if (marks >= 70) {
+                        grade = "C";
+                    } else if (marks >= 60) {
+                        grade = "D";
+                    } else {
+                        grade = "F";
+                    }
+                    System.out.printf("The grade for subject %d is %s.%n", j, grade);
+                }
                 found = true;
                 break;
             }
